@@ -1,6 +1,8 @@
 var express = require('express');
 // var ctf = require('./data/contenful.js');
 
+console.log('Hello its me adele ');
+
 var app = express();
 
 app.get('/', function(req, res) {
