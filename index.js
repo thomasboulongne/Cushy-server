@@ -1,5 +1,5 @@
 var express = require('express');
-var ctf = require('./data/contenful.js');
+// var ctf = require('./data/contenful.js');
 
 var app = express();
 
