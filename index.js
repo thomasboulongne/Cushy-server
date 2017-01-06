@@ -7,6 +7,7 @@ var app = express();
 
 app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/plain');
+    console.log(`hey adele it's me from the other side`)
     res.end('Vous êtes à l\'accueil');
 });
 
