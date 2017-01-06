@@ -1,7 +1,9 @@
-var express = require('express');
-var ctf = require('./data/contenful.js');
+'use strict';
 
-var app = express();
+const express = require('express');
+const ctf = require('./data/contenful.js');
+
+const app = express();
 
 app.get('/', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
@@ -12,7 +14,7 @@ app.get('/', (req, res) => {
 app.get('/sensor/:id/:data', (req, res) => {
 	let id = req.params.id;
 	let data = req.params.data;
-	
+
 	res.end(data);
 });
 
