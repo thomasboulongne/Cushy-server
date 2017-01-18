@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "lowdb": "^0.14.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "underscore-db": "^0.12.2"
   }
 }
