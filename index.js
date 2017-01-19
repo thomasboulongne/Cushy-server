@@ -5,12 +5,6 @@ const db = require('./db');
 
 const app = express();
 
-app.get('/', (req, res) => {
-	res.setHeader('Content-Type', 'text/plain');
-	console.log(`hey adele it's me from the other side`);
-	res.end('Vous êtes à l\'accueil');
-});
-
 app.get('/sensor/:id/:data', (req, res) => {
 	let coussflix_id = req.params.id;
 	let data = req.params.data;
@@ -32,7 +26,7 @@ app.get('/sensor/', (req, res) => {
 	const data = db.get('data')
 	.value();
 
-	let html = "<table><th><td>id</td><td>timetamp</td><td>data</td></th>";
+	let html = "<table><tr><th>id</th><th>timestamp</th><th>data</th></tr>";
 
 	for(let i = 0; i<data.length; i++) {
 		html += "<tr>";
