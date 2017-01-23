@@ -29,11 +29,13 @@ app.get('/sensor/', (req, res) => {
 	.value();
 
 	let html = "<table><tr><th>id</th><th>timestamp</th><th>data</th></tr>";
+;
 
 	for(let i = 0; i<data.length; i++) {
+		const date = new Date(data[i].timestamp);
 		html += "<tr>";
 		html += "<td>" + data[i].user_id + "</td>";
-		html += "<td>" + data[i].timestamp + "</td>";
+		html += "<td>" + ("0" + date.getDate()).substr(-2) + "/" + ("0" + (date.getMonth() + 1)).substr(-2) + "/" + date.getFullYear() + " " + ("0" + date.getHours()).substr(-2) + ":" + ("0" + date.getHours()).substr(-2) + ":" + ("0" + date.getSeconds()).substr(-2) + "</td>";
 		html += "<td>" + data[i].data + "</td>";
 		html += "</tr>";
 	}
