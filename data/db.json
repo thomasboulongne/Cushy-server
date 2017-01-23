@@ -1,36 +1,6 @@
 {
   "users": [
-    {
-      "id": 1
-    }
   ],
   "data": [
-    {
-      "user_id": 1,
-      "timestamp": "1351643431",
-      "data": [
-        1,
-        56,
-        13
-      ]
-    },
-    {
-      "user_id": "12345",
-      "data": "bjkbjbjkvd",
-      "timestamp": 1484760119077,
-      "id": "aba294eb-6bde-4997-804e-40590f16a30a"
-    },
-    {
-      "user_id": "12345",
-      "data": "bfdjkvnkx,;ngknlg,nlg",
-      "timestamp": 1484761207644,
-      "id": "562ffbc0-4adb-4138-821f-b844de55a87a"
-    },
-    {
-      "user_id": "12345",
-      "data": "leoestungrosbouffon",
-      "timestamp": 1484761588171,
-      "id": "9a2e6089-3191-46c2-aa6a-650fcbc9b71d"
-    }
   ]
 }
