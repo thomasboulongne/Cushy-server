@@ -34,9 +34,21 @@ app.get('/sensor/', (req, res) => {
 	for(let i = 0; i<data.length; i++) {
 		const date = new Date(data[i].timestamp);
 		html += "<tr>";
-		html += "<td>" + data[i].user_id + "</td>";
-		html += "<td>" + ("0" + date.getDate()).substr(-2) + "/" + ("0" + (date.getMonth() + 1)).substr(-2) + "/" + date.getFullYear() + " " + ("0" + date.getHours()).substr(-2) + ":" + ("0" + date.getHours()).substr(-2) + ":" + ("0" + date.getSeconds()).substr(-2) + "</td>";
-		html += "<td>" + data[i].data + "</td>";
+		html += "	<td>" + data[i].user_id + "</td>";
+		html += "	<td>";
+		html += 		("0" + date.getDate()).substr(-2);
+		html += 		"/";
+		html += 		("0" + (date.getMonth() + 1)).substr(-2);
+		html += 		"/";
+		html += 		date.getFullYear();
+		html += 		" ";
+		html += 		("0" + date.getHours()).substr(-2);
+		html += 		":";
+		html += 		("0" + date.getHours()).substr(-2);
+		html += 		":";
+		html += 		("0" + date.getSeconds()).substr(-2);
+		html += "	</td>";
+		html += "	<td>" + data[i].data + "</td>";
 		html += "</tr>";
 	}
 	
