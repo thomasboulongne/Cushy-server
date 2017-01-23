@@ -1,3 +1,5 @@
+'use strict';
+
 const Trakt = require('trakt.tv');
 const api = new Trakt({
   client_id: 'bbdddc510296f9b66a944ca13e9ace64f88ecdfaaf69b794c59ef5f33884b7b1',
