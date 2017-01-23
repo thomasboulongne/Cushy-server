@@ -55,7 +55,6 @@ app.get('/app/:id', (req, res) => {
 	.value();
 	
 	const last_entry = last_entries[0];
-	console.log(last_entry);
 
 	MovieManager.getMovies(last_entry);
 	res.end(last_entry.data);
