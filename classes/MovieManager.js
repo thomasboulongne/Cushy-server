@@ -35,16 +35,15 @@ class MovieManager {
         const mood = this.getMood(data);
         const genres = this.getGenres(mood);
 
-        console.log('Selected genres:', genres);
-
-        api.movies.popular({
-            genres: genres.toString()
-        }).then(response => {
-            console.log(response);
-        }).catch(err => {
-            console.log(err);
+        return new Promise( (resolve, reject) => {
+            api.movies.popular({
+                genres: genres.toString()
+            }).then(response => {
+                resolve(response);
+            }).catch(err => {
+                reject(err);
+            });
         });
-        return true;
     }
 
 };

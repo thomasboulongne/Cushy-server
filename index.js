@@ -26,16 +26,16 @@ app.get('/sensor/:id/:data', (req, res) => {
 	.value();
 	
 	res.end(data);
-
 });
 
 app.get('/sensor/', (req, res) => {
 
 	const data = db.get('data')
+	.sortBy('timestamp')
+	.reverse()
 	.value();
 
 	let html = "<table><tr><th>id</th><th>timestamp</th><th>data</th></tr>";
-;
 
 	for(let i = 0; i<data.length; i++) {
 		const date = new Date(data[i].timestamp);
@@ -59,7 +59,6 @@ app.get('/sensor/', (req, res) => {
 	}
 	
 	res.end(html);
-
 });
 
 app.get('/app/:id', (req, res) => {
@@ -76,8 +75,13 @@ app.get('/app/:id', (req, res) => {
 	
 	const last_entry = last_entries[0];
 
-	MovieManager.getMovies(last_entry);
-	res.end(last_entry.data);
+	MovieManager.getMovies(last_entry)
+	.then( response => {
+		res.end(JSON.stringify(response));
+	})
+	.catch( err => {
+		console.log(err);
+	});
 
 });
 
