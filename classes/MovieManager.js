@@ -8,6 +8,8 @@ const api = new Trakt({
   api_url: null         // fallbacks to 'api-v2launch.trakt.tv'
 });
 
+const MovieDB = require('moviedb')('99b804bdceeb4b618428eec89c04412e');
+
 class MovieManager {
 
     constructor() {
@@ -26,8 +28,7 @@ class MovieManager {
         /* INSERT MOOD MAPPING BULLSHIT HERE */
 
         return [
-            "action",
-            "comedy"
+            "thriller"
         ];
     }
 
@@ -37,9 +38,43 @@ class MovieManager {
 
         return new Promise( (resolve, reject) => {
             api.movies.popular({
-                genres: genres.toString()
+                genres: genres.toString(),
+                extended: 'full',
+                page: 1,
+                limit: 5
             }).then(response => {
-                resolve(response);
+                let result = {};
+                result.genres = genres;
+                result.movies = response;
+
+                let promises = [];
+
+                for (let i = 0; i < result.movies.length; i++) {
+                    let movie = result.movies[i];
+                    let customRating = Math.round(movie.rating / 2);
+                    movie.customRating = [];
+                    console.log(movie);
+                    for (let j = 0; j < 5; j++) {
+                        if(customRating > j) {
+                            movie.customRating.push('🌝');
+                        }
+                        else {
+                            movie.customRating.push('🌚');
+                        }
+                    }
+
+                    promises.push(new Promise( resolveBackdrop => {
+                        MovieDB.movieInfo({id: movie.ids.tmdb}, (err, res) => {
+                            movie.backdropImage = 'https://image.tmdb.org/t/p/w1300_and_h730_bestv2' + res.backdrop_path;
+                            resolveBackdrop('success');
+                        });
+                    }));
+                }
+
+                Promise.all(promises)
+                .then(() => {
+                    resolve(result);
+                });
             }).catch(err => {
                 reject(err);
             });

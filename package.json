@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "lowdb": "^0.14.0",
+    "moviedb": "^0.2.7",
     "nodemon": "^1.11.0",
     "request": "^2.79.0",
     "trakt.tv": "^3.1.0",
