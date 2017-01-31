@@ -18,10 +18,10 @@ class MovieManager {
     getMood() {
         /* INSERT DATA ANALYSIS BULLSHIT HERE */
 
-        return [
-            "Disappointed",
-            "Sad"
-        ];
+        return {
+            title: "Feeling droopy?",
+            subtitle: "Let's have a laugh!"
+        };
     }
 
     getGenres() {
@@ -37,41 +37,88 @@ class MovieManager {
         const genres = this.getGenres(mood);
 
         return new Promise( (resolve, reject) => {
-            api.movies.popular({
+            let promises = [];
+            let result = {};
+            result.genres = genres;
+            result.mood = mood;
+            promises.push(
+                api.movies.popular({
                 genres: genres.toString(),
                 extended: 'full',
                 page: 1,
                 limit: 5
-            }).then(response => {
-                let result = {};
-                result.genres = genres;
-                result.movies = response;
+            }));
 
-                let promises = [];
+            promises.push(
+                api.shows.popular({
+                genres: genres.toString(),
+                extended: 'full',
+                page: 1,
+                limit: 5
+            }));
+
+            Promise.all(promises)
+            .then( responses => {
+                result.movies = responses[0];
+                result.shows = responses[1];
+
+                let subPromises = [];
 
                 for (let i = 0; i < result.movies.length; i++) {
                     let movie = result.movies[i];
                     let customRating = Math.round(movie.rating / 2);
                     movie.customRating = [];
-                    console.log(movie);
                     for (let j = 0; j < 5; j++) {
                         if(customRating > j) {
-                            movie.customRating.push('🌝');
+                            movie.customRating.push('starred');
                         }
                         else {
-                            movie.customRating.push('🌚');
+                            movie.customRating.push('');
                         }
                     }
 
-                    promises.push(new Promise( resolveBackdrop => {
+                    movie.hours = Math.floor(movie.runtime / 60);
+                    movie.minutes = '0' + movie.runtime % 60;
+                    movie.minutes = movie.minutes.substr(-2, 2);
+
+                    subPromises.push(new Promise( resolveBackdrop => {
                         MovieDB.movieInfo({id: movie.ids.tmdb}, (err, res) => {
-                            movie.backdropImage = 'https://image.tmdb.org/t/p/w1300_and_h730_bestv2' + res.backdrop_path;
+                            movie.backdropImage = 'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + res.poster_path;
                             resolveBackdrop('success');
                         });
                     }));
+                    // console.log(movie);
                 }
 
-                Promise.all(promises)
+                for (let i = 0; i < result.shows.length; i++) {
+                    let show = result.shows[i];
+                    let customRating = Math.round(show.rating / 2);
+                    show.customRating = [];
+                    // console.log(show);
+                    for (let j = 0; j < 5; j++) {
+                        if(customRating > j) {
+                            show.customRating.push('starred');
+                        }
+                        else {
+                            show.customRating.push('');
+                        }
+                    }
+
+                    show.hours = Math.floor(show.runtime / 60);
+                    show.minutes = '0' + show.runtime % 60;
+                    show.minutes = show.minutes.substr(-2, 2);
+
+                    subPromises.push(new Promise( resolveBackdrop => {
+                        MovieDB.tvInfo({id: show.ids.tmdb}, (err, res) => {
+                            show.backdropImage = 'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + res.poster_path;
+                            resolveBackdrop('success');
+                        });
+                    }));
+
+                    console.log(show);
+                }
+
+                Promise.all(subPromises)
                 .then(() => {
                     resolve(result);
                 });
