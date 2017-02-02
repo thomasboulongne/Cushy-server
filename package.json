@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "express": "^4.14.0",
+    "lodash": "^4.17.4",
     "lowdb": "^0.14.0",
     "moviedb": "^0.2.7",
     "nodemon": "^1.11.0",

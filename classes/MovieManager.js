@@ -9,6 +9,7 @@ const api = new Trakt({
 });
 
 const MovieDB = require('moviedb')('99b804bdceeb4b618428eec89c04412e');
+const _ = require('lodash');
 
 class MovieManager {
 
@@ -84,17 +85,23 @@ class MovieManager {
                     subPromises.push(new Promise( resolveBackdrop => {
                         MovieDB.movieInfo({id: movie.ids.tmdb}, (err, res) => {
                             movie.backdropImage = 'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + res.poster_path;
-                            resolveBackdrop('success');
+                            MovieDB.movieCredits({id: movie.ids.tmdb}, (err, res) => {
+                                movie.director = _.find(res.crew, o => {
+                                    return o.job == 'Director';
+                                });
+                                
+                                movie.cast = _.take(res.cast, 3);
+                                resolveBackdrop('success');
+                            });
                         });
                     }));
-                    // console.log(movie);
                 }
 
                 for (let i = 0; i < result.shows.length; i++) {
                     let show = result.shows[i];
                     let customRating = Math.round(show.rating / 2);
                     show.customRating = [];
-                    // console.log(show);
+
                     for (let j = 0; j < 5; j++) {
                         if(customRating > j) {
                             show.customRating.push('starred');
@@ -111,11 +118,12 @@ class MovieManager {
                     subPromises.push(new Promise( resolveBackdrop => {
                         MovieDB.tvInfo({id: show.ids.tmdb}, (err, res) => {
                             show.backdropImage = 'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + res.poster_path;
-                            resolveBackdrop('success');
+                            MovieDB.tvCredits({id: show.ids.tmdb}, (err, res) => {
+                                show.cast = _.take(res.cast, 3);
+                                resolveBackdrop('success');
+                            });
                         });
                     }));
-
-                    console.log(show);
                 }
 
                 Promise.all(subPromises)
