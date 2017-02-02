@@ -82,6 +82,9 @@ class MovieManager {
                     movie.minutes = '0' + movie.runtime % 60;
                     movie.minutes = movie.minutes.substr(-2, 2);
 
+                    if(movie.trailer)
+                        movie.trailerId = movie.trailer.split('=')[1];
+
                     subPromises.push(new Promise( resolveBackdrop => {
                         MovieDB.movieInfo({id: movie.ids.tmdb}, (err, res) => {
                             movie.backdropImage = 'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + res.poster_path;
@@ -114,6 +117,9 @@ class MovieManager {
                     show.hours = Math.floor(show.runtime / 60);
                     show.minutes = '0' + show.runtime % 60;
                     show.minutes = show.minutes.substr(-2, 2);
+
+                    if(show.trailer)
+                        show.trailerId = show.trailer.split('=')[1];
 
                     subPromises.push(new Promise( resolveBackdrop => {
                         MovieDB.tvInfo({id: show.ids.tmdb}, (err, res) => {
