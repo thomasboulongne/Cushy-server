@@ -123,6 +123,8 @@ class MovieManager {
 
                     subPromises.push(new Promise( resolveBackdrop => {
                         MovieDB.tvInfo({id: show.ids.tmdb}, (err, res) => {
+                            show.seasonsCount = res.seasons.length;
+                            show.episodesCount = res.seasons[0].episode_count;
                             show.backdropImage = 'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + res.poster_path;
                             MovieDB.tvCredits({id: show.ids.tmdb}, (err, res) => {
                                 show.cast = _.take(res.cast, 3);
