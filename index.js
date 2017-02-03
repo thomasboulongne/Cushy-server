@@ -70,7 +70,7 @@ app.get('/app/:id', (req, res) => {
 	})
 	.sortBy('timestamp')
 	.reverse()
-	.take(1)
+	.take(10)
 	.value();
 	
 	const last_entry = last_entries[0];

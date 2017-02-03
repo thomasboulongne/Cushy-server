@@ -10,27 +10,19 @@ const api = new Trakt({
 
 const MovieDB = require('moviedb')('99b804bdceeb4b618428eec89c04412e');
 const _ = require('lodash');
+const moods = require('../data/moods');
 
 class MovieManager {
 
     constructor() {
     }
 
-    getMood() {
-        /* INSERT DATA ANALYSIS BULLSHIT HERE */
-
-        return {
-            title: "Feeling droopy?",
-            subtitle: "Let's have a laugh!"
-        };
+    getMood(data) {
+        return _.find(moods, o => { return o.action == data.data;});
     }
 
-    getGenres() {
-        /* INSERT MOOD MAPPING BULLSHIT HERE */
-
-        return [
-            "thriller"
-        ];
+    getGenres(mood) {
+        return mood.genres;
     }
 
     getMovies(data) {

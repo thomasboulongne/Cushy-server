@@ -1,6 +1,41 @@
 {
-  "users": [
-  ],
+  "users": [],
   "data": [
+    {
+      "user_id": "12345",
+      "data": "hug",
+      "timestamp": 1486091284550,
+      "id": "864f01ae-17cc-4025-a27e-eb412681bbaa"
+    },
+    {
+      "user_id": "123",
+      "data": "hug",
+      "timestamp": 1486091306055,
+      "id": "d80da537-f729-4266-a248-b8941a76f406"
+    },
+    {
+      "user_id": "123",
+      "data": "shy",
+      "timestamp": 1486092216779,
+      "id": "9983da1c-7412-4a29-b727-242ddfa7c430"
+    },
+    {
+      "user_id": "123",
+      "data": "hug",
+      "timestamp": 1486092381315,
+      "id": "8c0b6137-92f6-418d-9843-2e4d856eb1ea"
+    },
+    {
+      "user_id": "123",
+      "data": "punch",
+      "timestamp": 1486092528291,
+      "id": "af761e07-bacd-4d31-b21c-228b599e0edd"
+    },
+    {
+      "user_id": "123",
+      "data": "caress",
+      "timestamp": 1486092574617,
+      "id": "700c679b-a0cc-4a4b-a057-269ba8d8cff7"
+    }
   ]
 }
